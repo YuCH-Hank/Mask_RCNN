@@ -129,6 +129,8 @@ def display_instances(image, boxes, masks, class_ids, class_names, save_dir, img
             # Skip this instance. Has no bbox. Likely lost in image cropping.
             continue
         y1, x1, y2, x2 = boxes[i]
+        y1 = y1 - (1920 - 1024)/2
+        y2 = y2 - (1920 - 1024)/2
         if show_bbox:
             p = patches.Rectangle((x1, y1), x2 - x1, y2 - y1, linewidth=2,
                                 alpha=0.7, linestyle="dashed",
@@ -162,6 +164,7 @@ def display_instances(image, boxes, masks, class_ids, class_names, save_dir, img
             verts = np.fliplr(verts) - 1
             p = Polygon(verts, facecolor="none", edgecolor=color)
             ax.add_patch(p)
+
     img = masked_image[int(512 - 1024 * 1080 / 1920 / 2):int(512 + 1024 * 1080 / 1920 / 2)][:]
     ax.imshow(img.astype(np.uint8))
 
